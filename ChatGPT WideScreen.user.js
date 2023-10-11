@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ChatGPT WideScreen
 // @namespace    http://tampermonkey.net/
-// @version      0.4
+// @version      0.5
 // @description  Make the ChatGPT conversation window wider.
 // @author       Xiong Yu
 // @match        https://chat.openai.com/*
@@ -16,9 +16,9 @@
     function updateStyle(element) {
         element.style.maxWidth = '95%';
     }
-
-    var node1 = '#__next > div.overflow-hidden.w-full.h-full.relative.flex.z-0 > div.relative.flex.h-full.max-w-full.flex-1.overflow-hidden > div > main > div > div.flex-1.overflow-hidden > div > div > div > div > div';
-    var node2 = '#__next > div.overflow-hidden.w-full.h-full.relative.flex.z-0 > div.relative.flex.h-full.max-w-full.flex-1.overflow-hidden > div > main > div > div.flex-1.overflow-hidden > div > div > div > div > div > div'
+	
+    var node1 = '#__next > div > div > div > main > div > div > div > div > div > div > div';
+    var node2 = '#__next > div > div > main > div > div > div > div > div > div > div > div';
 
     const observer = new MutationObserver(mutationsList => {
         mutationsList.forEach(mutation => {
