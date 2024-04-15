@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ChatGPT WideScreen
 // @namespace    http://tampermonkey.net/
-// @version      0.5
+// @version      1.0
 // @description  Make the ChatGPT conversation window wider.
 // @author       Xiong Yu
 // @match        https://chat.openai.com/*
@@ -19,6 +19,7 @@
 	
     var node1 = '#__next > div > div > div > main > div > div > div > div > div > div > div';
     var node2 = '#__next > div > div > main > div > div > div > div > div > div > div > div';
+    var node3 = '#__next > div > div > main > div > div > div > div > div > div > div > div > div';
 
     const observer = new MutationObserver(mutationsList => {
         mutationsList.forEach(mutation => {
@@ -35,6 +36,8 @@
                             matchingChildren1.forEach(updateStyle);
                             const matchingChildren2 = addedNode.querySelectorAll(node2);
                             matchingChildren2.forEach(updateStyle);
+                            const matchingChildren3 = addedNode.querySelectorAll(node3);
+                            matchingChildren3.forEach(updateStyle);
                         }
                     }
                 });
