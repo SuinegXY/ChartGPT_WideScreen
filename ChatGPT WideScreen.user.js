@@ -5,6 +5,7 @@
 // @description  Make the ChatGPT conversation window wider.
 // @author       Xiong Yu
 // @match        https://chat.openai.com/*
+// @match        https://chatgpt.com/*
 // @grant        none
 // @home-url     https://greasyfork.org/zh-CN/scripts/473238
 // @homepageURL  https://greasyfork.org/zh-CN/scripts/473238
