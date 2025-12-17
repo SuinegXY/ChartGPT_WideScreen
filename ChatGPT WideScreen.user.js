@@ -1,14 +1,16 @@
 // ==UserScript==
-// @name         ChatGPT WideScreen
+// @name         AI Chat WideScreen
 // @namespace    http://tampermonkey.net/
-// @version      1.0
-// @description  Make the ChatGPT conversation window wider.
+// @version      2.3
+// @description  Make the ChatGPT & DeepSeek conversation window wider.使ChatGPT和DeepSeek的聊天对话框更宽
 // @author       Xiong Yu
 // @match        https://chat.openai.com/*
 // @match        https://chatgpt.com/*
+// @match        https://chat.deepseek.com/*
 // @grant        none
-// @home-url     https://greasyfork.org/zh-CN/scripts/473238
 // @homepageURL  https://greasyfork.org/zh-CN/scripts/473238
+// @downloadURL https://update.greasyfork.org/scripts/473238/AI%20Chat%20WideScreen.user.js
+// @updateURL https://update.greasyfork.org/scripts/473238/AI%20Chat%20WideScreen.meta.js
 // ==/UserScript==
 
 (function() {
@@ -17,28 +19,27 @@
     function updateStyle(element) {
         element.style.maxWidth = '95%';
     }
-	
-    var node1 = '#__next > div > div > div > main > div > div > div > div > div > div > div';
-    var node2 = '#__next > div > div > main > div > div > div > div > div > div > div > div';
-    var node3 = '#__next > div > div > main > div > div > div > div > div > div > div > div > div';
+
+    const nodes = [
+        'body > div > div > main > div > div > div > div > div > div > article > div > div',
+        'body > div > div > div > div > main > div > div > div > div > div > div > article > div > div',
+        'body > div > div > div > div > main > div > div > div > div > article > div > div',
+        'body > div > div > div > div > main > div > div > div > div > div > article > div > div',
+        '#thread > div > div > div > article > div > div',
+        '#root > div > div > div > div > div > div > div > div'
+    ];
 
     const observer = new MutationObserver(mutationsList => {
         mutationsList.forEach(mutation => {
             if (mutation.addedNodes.length > 0) {
-                // 循环处理每个新增的节点
                 mutation.addedNodes.forEach(addedNode => {
                     if (addedNode.nodeType === Node.ELEMENT_NODE) {
-                        // 检查新增节点是否匹配目标选择器
-                        if (addedNode.matches(node1) || addedNode.matches(node2)) {
+                        if (nodes.some(selector => addedNode.matches(selector))) {
                             updateStyle(addedNode);
                         } else {
-                            // 如果新增节点包含目标选择器的子节点，则更新子节点的样式
-                            const matchingChildren1 = addedNode.querySelectorAll(node1);
-                            matchingChildren1.forEach(updateStyle);
-                            const matchingChildren2 = addedNode.querySelectorAll(node2);
-                            matchingChildren2.forEach(updateStyle);
-                            const matchingChildren3 = addedNode.querySelectorAll(node3);
-                            matchingChildren3.forEach(updateStyle);
+                            nodes.forEach(selector => {
+                                addedNode.querySelectorAll(selector).forEach(updateStyle);
+                            });
                         }
                     }
                 });
